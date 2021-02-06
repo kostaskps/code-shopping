@@ -20,7 +20,7 @@ namespace Shopping.App.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(Data.ProductContext.ProductList);
         }
 
         public IActionResult Privacy()
