@@ -38,7 +38,6 @@ namespace Shopping.API.Data
 
             return Enumerable.Range(1, 5).Select(index => new ProductModel
             {
-                Id = index,
                 Brand = Brands[random.Next(Brands.Length)],
                 ModelName = ModelNames[random.Next(ModelNames.Length)],
                 Category = "Graphics Cards",

@@ -7,9 +7,8 @@ namespace Shopping.API.Models
     {
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-        public int Id { get; set; }
-
-        [Required, StringLength(80)]
+        public string Id { get; set; }
+        
         public string Brand { get; set; }
         public string ModelName { get; set; }
         public string Category { get; set; }

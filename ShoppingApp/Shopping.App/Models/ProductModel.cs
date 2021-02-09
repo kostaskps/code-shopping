@@ -4,9 +4,8 @@ namespace Shopping.App.Models
 {
     public class ProductModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
-        [Required, StringLength(80)]
         public string Brand { get; set; }
         public string ModelName { get; set; }
         public string Category { get; set; }
