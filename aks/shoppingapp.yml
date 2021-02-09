@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopping-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shopping-app
+  template:
+    metadata:
+      labels:
+        app: shopping-app
+    spec:
+      containers:
+      - name: shopping-app
+        image: kostaskpsacr.azurecr.io/shoppingapp:v1
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "64Mi"
+            cpu: "200m"
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: Shopping_API_Service_URL
+          valueFrom:
+            configMapKeyRef:
+              name: shoppingapi-configmap
+              key: shopping_api_url
+      imagePullSecrets:
+        - name:  acr-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopping-app-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: shopping-app
+  ports:
+  - port: 80

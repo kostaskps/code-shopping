@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-configmap
+data:
+  connection_string: mongodb://mongouser:mongopwd1@mongo-service:27017
