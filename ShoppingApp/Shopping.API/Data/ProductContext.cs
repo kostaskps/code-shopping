@@ -1,16 +1,38 @@
 ﻿using Shopping.API.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Shopping.API.Data
 {
     public static class ProductContext
     {
-        public static IReadOnlyList<ProductModel> ProductList = new List<ProductModel>()
+        private static readonly string[] Brands = new[]
         {
-            new ProductModel {Id = 1, Brand = "GeForce GTX 1030", ModelName = "MSI GeForce GTX 1030 2GB", Category = "Graphics Cards", Price = 89.50M},
-            new ProductModel {Id = 2, Brand = "GeForce GTX 1650", ModelName = "ASUS GeForce GTX 1650 4GB", Category = "Graphics Cards", Price = 132.48M},
-            new ProductModel {Id = 2, Brand = "GeForce RTX 2060", ModelName = "Gigabyte GeForce RTX 2060 6GB", Category = "Graphics Cards", Price = 402.67M},
-            new ProductModel {Id = 2, Brand = "GeForce RTX 2070", ModelName = "Gainward GeForce GTX 2070 8GB, PCI Express x16 4.0, HDMI: 1, DisplayPort: 3", Category = "Graphics Cards", Price = 510.65M}
+            "MSI", "Asus", "Gigabyte", "Gainward", "Sapphire", "EVGA"
         };
+
+        private static readonly string[] ModelNames = new[]
+        {
+            "GeForce GTX 1030", "GeForce GTX 1650", "GeForce RTX 2060", "GeForce RTX 2070"
+        };
+
+        public static IReadOnlyList<ProductModel> ProductList
+        {
+            get
+            {
+                var random = new Random();
+
+                return Enumerable.Range(1, 5).Select(index => new ProductModel
+                {
+                    Id = index,
+                    Brand = Brands[random.Next(Brands.Length)],
+                    ModelName = ModelNames[random.Next(ModelNames.Length)],
+                    Category = "Graphics Cards",
+                    Price = random.Next(88, 289)
+                })
+                .ToArray();
+            }
+        }
     }
 }
