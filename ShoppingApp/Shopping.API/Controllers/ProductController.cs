@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Shopping.API.Data;
 using Shopping.API.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Shopping.API.Controllers
 {
@@ -32,17 +30,7 @@ namespace Shopping.API.Controllers
         [HttpGet]
         public IEnumerable<ProductModel> Get()
         {
-            var random = new Random();
-            
-            return Enumerable.Range(1, 5).Select(index => new ProductModel
-            {
-                Id = index,
-                Brand = Brands[random.Next(Brands.Length)],
-                ModelName = ModelNames[random.Next(ModelNames.Length)],
-                Category = "Graphics Cards",
-                Price = random.Next(88, 289)
-            })
-            .ToArray();
+            return ProductContext.ProductList;
         }
     }
 }
