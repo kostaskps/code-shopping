@@ -1,13 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Shopping.App
 {
@@ -25,7 +21,8 @@ namespace Shopping.App
         {
             services.AddHttpClient("APIClient", configureClient =>
             {
-                configureClient.BaseAddress = new Uri("http://localhost:5000/");
+                //configureClient.BaseAddress = new Uri("http://localhost:5000/"); // API Url
+                configureClient.BaseAddress = new Uri(Configuration["Shopping_API_Service_URL"]);
             });
             services.AddControllersWithViews();
         }
