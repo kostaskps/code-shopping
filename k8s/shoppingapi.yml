@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopping-api
+spec:
+  selector:
+    matchLabels:
+      app: shopping-api
+  template:
+    metadata:
+      labels:
+        app: shopping-api
+    spec:
+      containers:
+      - name: shopping-api
+        image: kostaskps/shoppingapi:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        env:
+          - name: ASPNETCORE_ENVIRONMENT
+            value: Development
+          - name:  MongoDBSettings__ConnectionString
+            valueFrom:
+              configMapKeyRef:
+                key: connection_string
+                name: mongo-configmap
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shoppingapi-service
+spec:
+  type: NodePort
+  selector:
+    app: shopping-api
+  ports:
+  - port: 9000
+    targetPort: 80
+    nodePort: 31000
