@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: shopping-api
+  name: shopping-api-deployment
 spec:
   selector:
     matchLabels:
@@ -27,13 +27,13 @@ spec:
           - name:  MongoDBSettings__ConnectionString
             valueFrom:
               configMapKeyRef:
-                key: connection_string
                 name: mongo-configmap
+                key: connection_string
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: shoppingapi-service
+  name: shopping-api-service
 spec:
   type: NodePort
   selector:
