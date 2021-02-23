@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: shopping-app
-        image: kostaskpsacr.azurecr.io/shoppingapp:v1
+        image: kostaskpsacr.azurecr.io/shoppingapp:v2
         imagePullPolicy: IfNotPresent
         resources:
           limits:
