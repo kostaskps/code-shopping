@@ -14,7 +14,7 @@ variables:
   imageRepository: 'shoppingapi'
   containerRegistry: 'kostaskpsacr.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/ShoppingApp/Shopping.API/Dockerfile'
-  tag: '$(Build.BuildId)'
+  tag: '$(Build.BuildNumber)'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
