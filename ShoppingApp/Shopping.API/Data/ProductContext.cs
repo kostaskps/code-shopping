@@ -41,7 +41,7 @@ namespace Shopping.API.Data
                 Brand = Brands[random.Next(Brands.Length)],
                 ModelName = ModelNames[random.Next(ModelNames.Length)],
                 Category = "Graphics Cards",
-                Price = random.Next(88, 289)
+                Price = random.Next(88, 279)
             })
             .ToArray();
         }
