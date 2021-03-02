@@ -3,7 +3,13 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-- main
+  branches:
+    include:
+    - main
+  path:
+    include:
+    - ShoppingApp/Shopping.API/*
+    - aks/shoppingapi.yml
 
 resources:
 - repo: self
@@ -14,7 +20,7 @@ variables:
   dockerRegistryServiceConnection: '53cb21d8-5174-406c-a4c7-c24a4c68743a'
   imageRepository: 'shoppingapi'
   containerRegistry: 'kostaskpsacr.azurecr.io'
-  dockerfilePath: '**/Dockerfile'
+  dockerfilePath: 'ShoppingApp/Shopping.API/Dockerfile'
   tag: '$(Build.BuildNumber)'
   imagePullSecret: 'kostaskpsacr13640c6f-auth'
 
@@ -44,8 +50,8 @@ stages:
         tags: |
           $(tag)
 
-    - upload: manifests
-      artifact: manifests
+    - upload: aks
+      artifact: aks
 
 - stage: Deploy
   displayName: Deploy stage
@@ -74,7 +80,7 @@ stages:
             inputs:
               action: deploy
               manifests: |
-                $(Pipeline.Workspace)/manifests/shoppingapi.yml
+                $(Pipeline.Workspace)/aks/shoppingapi.yml
               imagePullSecrets: |
                 $(imagePullSecret)
               containers: |
@@ -114,8 +120,7 @@ stages:
               action: deploy
               namespace: $(k8sNamespaceForPR)
               manifests: |
-                $(Pipeline.Workspace)/manifests/deployment.yml
-                $(Pipeline.Workspace)/manifests/service.yml
+                $(Pipeline.Workspace)/aks/shoppingapi.yml
               imagePullSecrets: |
                 $(imagePullSecret)
               containers: |
